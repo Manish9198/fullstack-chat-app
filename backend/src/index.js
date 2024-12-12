@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import path from"path";
+import path from "path";
 
 import { connectDB } from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js";
@@ -12,21 +12,21 @@ import { app, server} from "./lib/socket.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT  || 5001 ; //if undefined
 const __dirname = path.resolve();
 
-app.use(express.json());   //middleware to extract json data from data
+app.use(express.json());
 app.use(cookieParser());
 app.use(
     cors({
-        origin: "https://localhost:5173",
+        origin: "http://localhost:5173",
         credentials:true,
  })
 );
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-
+//serve frontend in production
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
   
