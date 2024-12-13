@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { useAuthStore } from "../store/useAuthStore";
-import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState } from "react"; // Importing React hook for managing component state
+import { useAuthStore } from "../store/useAuthStore"; // Importing custom authentication store
+import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react"; // Importing icons
+import { Link } from "react-router-dom"; // Importing Link component for routing
 
-import AuthImagePattern from "../components/AuthImagePattern";
-import toast from "react-hot-toast";
+import AuthImagePattern from "../components/AuthImagePattern"; // Custom component for right-side image
+import toast from "react-hot-toast"; // For displaying notifications
 
 const SignUpPage = () => {
+  // State hooks for controlling visibility of the password and form data
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -14,8 +15,10 @@ const SignUpPage = () => {
     password: "",
   });
 
+  // Destructuring the signup function and the signup loading state from the auth store
   const { signup, isSigningUp } = useAuthStore();
 
+  // Form validation function
   const validateForm = () => {
     if (!formData.fullName.trim()) return toast.error("Full name is required");
     if (!formData.email.trim()) return toast.error("Email is required");
@@ -26,20 +29,21 @@ const SignUpPage = () => {
     return true;
   };
 
+  // Form submission handler
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
 
-    const success = validateForm();
+    const success = validateForm(); // Validate form inputs
 
-    if (success === true) signup(formData);
+    if (success === true) signup(formData); // Call signup function if form is valid
   };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
-      {/* left side */}
+      {/* Left side of the screen with the form */}
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-8">
-          {/* LOGO */}
+          {/* Logo and Heading */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
               <div
@@ -53,6 +57,7 @@ const SignUpPage = () => {
             </div>
           </div>
 
+          {/* Form to collect user data */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control">
               <label className="label">
@@ -99,7 +104,7 @@ const SignUpPage = () => {
                   <Lock className="size-5 text-base-content/40" />
                 </div>
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? "text" : "password"} // Toggle password visibility
                   className={`input input-bordered w-full pl-10`}
                   placeholder="••••••••"
                   value={formData.password}
@@ -108,7 +113,7 @@ const SignUpPage = () => {
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
                 >
                   {showPassword ? (
                     <EyeOff className="size-5 text-base-content/40" />
@@ -119,6 +124,7 @@ const SignUpPage = () => {
               </div>
             </div>
 
+            {/* Submit Button */}
             <button type="submit" className="btn btn-primary w-full" disabled={isSigningUp}>
               {isSigningUp ? (
                 <>
@@ -131,6 +137,7 @@ const SignUpPage = () => {
             </button>
           </form>
 
+          {/* Link to Sign-in page */}
           <div className="text-center">
             <p className="text-base-content/60">
               Already have an account?{" "}
@@ -142,8 +149,7 @@ const SignUpPage = () => {
         </div>
       </div>
 
-      {/* right side */}
-
+      {/* Right side with AuthImagePattern component */}
       <AuthImagePattern
         title="Join our community"
         subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
@@ -151,4 +157,5 @@ const SignUpPage = () => {
     </div>
   );
 };
+
 export default SignUpPage;
