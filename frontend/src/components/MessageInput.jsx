@@ -85,8 +85,8 @@ const MessageInput = () => {
       setText(""); // Reset the text input
       setImagePreview(null); // Clear the image preview
       setVideoPreview(null); // Clear the video preview
-      if (fileInputRef.current) fileInputRef.current.value = ""; // Reset the image file input
-      if (videoInputRef.current) videoInputRef.current.value = ""; // Reset the video file input
+      // if (fileInputRef.current) fileInputRef.current.value = ""; // Reset the image file input
+      // if (videoInputRef.current) videoInputRef.current.value = ""; // Reset the video file input
     } catch (error) {
       console.error("Failed to send message:", error); // Log any errors
     }
